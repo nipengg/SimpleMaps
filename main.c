@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #define V 5
 #define  maxVal 9999
+#define MAX_LEN 128
 int jarakMin(int jarak[V], bool dikunjungi[V])
 {
     int min = maxVal;
@@ -58,10 +59,39 @@ void dijkstra(int graph[V][V], int start)
 int main()
 {
     printf("Welcome to Simple Maps\n");
+    FILE *fptr = fopen("img\\WorldMap.txt", "r");
+    if(fptr == NULL)
+    {
+        printf("\nError Opening %s File.\n", "WorldMap"); exit(1);
+    }
+    char read_string[MAX_LEN];
+    while(fgets(read_string, sizeof(read_string), fptr) != NULL)
+    {
+        printf("%s",read_string);
+    }
+    printf("\n");
+    fclose(fptr);
     printf("Would you like to create your own map or use one of our presets?\n>> Use my own (1) / Use a preset (2)\n>> ");
     int type;
     scanf("%d", &type);
-    if(type == 2)
+    if(type == 1)
+    {
+        printf("Please enter your map in an adjacency matrix.\n");
+        int gSize;
+        printf("Enter graph size: ");
+        scanf("%d", &gSize);
+        int newGraph[gSize][gSize];
+        for(int i = 0; i < gSize; i++)
+        {
+            for(int x = 0; x < gSize; x++)
+            {
+                printf("Graph[%d][%d]: ", i, x);
+                scanf("%d", &newGraph[i][x]);
+            }
+            printf("\n");
+        }
+    }
+    else if(type == 2)
     {
         printf("Here are some map presets available, pick them by the preset number.\n");
         printf("Preset 1\n");
@@ -101,14 +131,12 @@ int main()
 
         if(preset == 1)
         {
-            printf("Map:\n");
-            printf("Here are some map presets available, pick them by the preset number.\n");
             printf("Preset 1\n");
             printf("                    (1) -1- (2)\n");
             printf("                   /  \\      /\n");
             printf("                  3    4    2\n");
             printf("                 /      \\  /\n");
-            printf("          You->(0) --7--  (3)\n");
+            printf("               (0) --7-- (3)\n");
             printf("               \\         /\n");
             printf("                12      3\n");
             printf("                 \\    /\n");
@@ -128,11 +156,29 @@ int main()
                     }
                 }
             }
+            printf("______________________________________\n");
+            int src = -1;
+            while(src < 0 || src >= V)
+            {
+                printf("Choose a starting point: ");
+                scanf("%d", &src);
+            }
+
+            dijkstra(graph1, src);
         }
-
-        dijkstra(graph1, 0);
-
-
+        else if(preset == 2)
+        {
+             printf("Preset 2\n");
+             printf("            (0) --4-- (1)\n");
+             printf("            |        /   \\\n");
+             printf("            |       /     3\n");
+             printf("            |      /       \\\n");
+             printf("            2     5       (2)\n");
+             printf("            |    /        /\n");
+             printf("            |   /        3\n");
+             printf("            |  /        /\n");
+             printf("            (4) --3-- (3)\n");
+        }
 
     }
 }
