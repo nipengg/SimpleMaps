@@ -102,18 +102,32 @@ int main()
         if(preset == 1)
         {
             printf("Map:\n");
-             printf("Here are some map presets available, pick them by the preset number.\n");
-        printf("Preset 1\n");
-        printf("                    (1) -1- (2)\n");
-        printf("                   /  \\      /\n");
-        printf("                  3    4    2\n");
-        printf("                 /      \\  /\n");
-        printf("          You->(0) --7--  (3)\n");
-        printf("               \\         /\n");
-        printf("                12      3\n");
-        printf("                 \\    /\n");
-        printf("                   (4)\n");
-
+            printf("Here are some map presets available, pick them by the preset number.\n");
+            printf("Preset 1\n");
+            printf("                    (1) -1- (2)\n");
+            printf("                   /  \\      /\n");
+            printf("                  3    4    2\n");
+            printf("                 /      \\  /\n");
+            printf("          You->(0) --7--  (3)\n");
+            printf("               \\         /\n");
+            printf("                12      3\n");
+            printf("                 \\    /\n");
+            printf("                   (4)\n");
+            printf("Table Representation: \n");
+            for(int i = 0; i < V; i++)
+            {
+                printf("Node %d: ", i);
+                for(int x = 0; x < V; x++)
+                {
+                    if(x == V - 1)
+                    {
+                        printf(" %3d |\n", graph1[i][x]);
+                    }
+                    else {
+                        printf(" %3d |", graph1[i][x]);
+                    }
+                }
+            }
         }
 
         dijkstra(graph1, 0);
