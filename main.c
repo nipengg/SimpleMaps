@@ -177,19 +177,63 @@ int main()
     if (type == 1)
     {
         printf("Please enter your map in an adjacency matrix.\n");
-        int gSize;
         printf("Enter graph size: ");
-        scanf("%d", &gSize);
-        int newGraph[gSize][gSize];
-        for (int i = 0; i < gSize; i++)
+        scanf("%d", &V);
+        int newGraph[V][V];
+        for (int i = 0; i < V; i++)
         {
-            for (int x = 0; x < gSize; x++)
+            for (int x = 0; x < V; x++)
             {
                 printf("Graph[%d][%d]: ", i, x);
                 scanf("%d", &newGraph[i][x]);
             }
             printf("\n");
         }
+
+        printf("Table Representation: \n");
+            for (int i = 0; i < V; i++)
+            {
+                if(i <= 9)
+                {
+                    printf("Node %d : ", i);
+                }
+                else {
+                    printf("Node %d: ", i);
+                }
+
+                for (int x = 0; x < V; x++)
+                {
+
+                    if (x == V - 1)
+                    {
+                        printf(" %3d |\n", newGraph[i][x]);
+                    }
+                    else
+                    {
+                        printf(" %3d |", newGraph[i][x]);
+                    }
+                }
+            }
+            printf("______________________________________\n");
+            int src = -1;
+            while (src < 0 || src >= V)
+            {
+                printf("Choose a starting point: ");
+                scanf("%d", &src);
+            }
+            int tgt = -1;
+            while (tgt < 0 || src >= V || tgt == src)
+            {
+                printf("Choose an end point: ");
+                scanf("%d", &tgt);
+            }
+
+            int speed;
+            printf("How fast will you be traveling (km/h) : ");
+            scanf("%d", &speed);
+
+            dijkstra(newGraph, src, tgt, speed);
+
     }
     else if (type == 2)
     {
