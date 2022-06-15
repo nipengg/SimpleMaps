@@ -153,6 +153,7 @@ void dijkstra(int graph[V][V], int start, int target, int speed)
 
 int main()
 {
+    system("cls");
     printf("Welcome to Simple Maps\n");
     FILE *fptr = fopen("img\\WorldMap.txt", "r");
     if (fptr == NULL)
