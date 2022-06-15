@@ -61,11 +61,7 @@ void dijkstra(int graph[V][V], int start, int target, int speed)
             }
         }
     }
-    printf("Node\tJarak dari node %d\t\tKota keberangkatan\n", start);
-    for (int v = 0; v < V; v++)
-    {
-        printf("%d\t\t %d\t\t\t\t\t%d\n", v, jarak[v], kotaKeberangkatan[v]);
-    }
+
     int route[V];
     int node = target;
     route[0] = node;
