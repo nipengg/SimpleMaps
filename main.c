@@ -6,25 +6,6 @@
 #define maxVal 9999
 
 int V = 16;
-char date[100];
-
-void getTime(void)
-{
-    time_t now;
-
-    time(&now);
-
-    struct tm *local = localtime(&now);
-
-    int min = local->tm_min;
-    int hour = local->tm_hour;
-
-    sprintf(date, "%d:%d", hour, min);
-
-    printf("%s\n", date);
-
-    return 0;
-}
 
 int jarakMin(int jarak[V], bool dikunjungi[V])
 {
@@ -48,6 +29,7 @@ void dijkstra(int graph[V][V], int start, int target, int speed)
     time(&now);
     struct tm *local = localtime(&now);
 
+    // Mengambil menit dan detik waktu sekarang
     min = local->tm_min;
     hour = local->tm_hour;
 
@@ -189,7 +171,6 @@ int main()
     }
     printf("\n");
     fclose(fptr);
-    getTime();
     printf("Would you like to create your own map or use one of our presets?\n>> Use my own (1) / Use a preset (2)\n>> ");
     int type;
     scanf("%d", &type);
@@ -833,7 +814,7 @@ int main()
             }
 
             int speed;
-            printf("How fast will you be traveling: ");
+            printf("How fast will you be traveling (km/h) : ");
             scanf("%d", &speed);
 
             dijkstra(graph1, src, tgt, speed);
