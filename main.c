@@ -7,25 +7,29 @@
 
 int V = 16;
 
-int jarakMin(int jarak[V], bool dikunjungi[V])
-{
+int jarakMin(int jarak[V], bool dikunjungi[V])//untuk mencari jarak yang paling pendek
+{//jarak[V] membawa data jarak anar node yang paling pendek
+    //dikunjungi[V] untuk menyimpan data node berupa true/ false. Jika true
     int min = maxVal;
     int min_index = -1;
     for (int x = 0; x < V; x++)
     {
-        if (dikunjungi[x] == false && jarak[x] <= min)
+        if (dikunjungi[x] == false && jarak[x] <= min)//jika node belum dikunjungi dan jaraknya kurang dari 9999
         {
-            min = jarak[x];
-            min_index = x;
+            min = jarak[x];//jarak yang lama diganti menjadi jarak yang baru
+            min_index = x;//yang sebelumnya berisi nilai dasar diganti menjadi node yang akan dikunjungi selanjutnya
         }
     }
     return min_index;
 }
 
 void dijkstra(int graph[V][V], int start, int target, int speed)
-{
+{//graph[V][V] = menyimpan ukuran graph
+    //start = titik awal keberangkatan
+    //target = tujuan perjalanan
+    //speed = kecepatan yang digunakan untuk menempuh perjalanan
     int min, hour, newMin, newHour;
-    time_t now;
+    time_t now;//memanggil library time untuk mengakses waktu device
     time(&now);
     struct tm *local = localtime(&now);
 
@@ -33,24 +37,24 @@ void dijkstra(int graph[V][V], int start, int target, int speed)
     min = local->tm_min;
     hour = local->tm_hour;
 
-    int jarak[V];
-    bool dikunjungi[V];
-    int kotaKeberangkatan[V];
+    int jarak[V];//menyimpan jarak antar node
+    bool dikunjungi[V];//menyimpan data node sudah dikunjungi atau belum
+    int kotaKeberangkatan[V];//menyimpan data dari mana node sebelumnya berasal
 
-    for (int i = 0; i < V; i++)
+    for (int i = 0; i < V; i++)//ketika awal baru mulai perjalanan
     {
-        jarak[i] = maxVal;
-        dikunjungi[i] = false;
-        kotaKeberangkatan[i] = start;
+        jarak[i] = maxVal;//diasumsikan seluruh jarak berupa maxVal(belum diketahui jaraknya)
+        dikunjungi[i] = false;//kalau belum dikunjungi
+        kotaKeberangkatan[i] = start;//maka dianggap node tersebut menjadi start
     }
 
-    jarak[start] = 0;
+    jarak[start] = 0;//diasumsikan jarak start adalah 0
 
-    for (int x = 0; x < V - 1; x++)
+    for (int x = 0; x < V - 1; x++)//perulangan untuk mencari jalur tercepat
     {
-        int index = jarakMin(jarak, dikunjungi);
+        int index = jarakMin(jarak, dikunjungi);//memanggil data dari jarakMin untuk mengetahui jarak terpendek ke node tetangga
 
-        dikunjungi[index] = true;
+        dikunjungi[index] = true;//node yang sedang dikunjungi berubah bernilai true
 
         for (int v = 0; v < V; v++)
         {
@@ -153,7 +157,6 @@ void dijkstra(int graph[V][V], int start, int target, int speed)
 
 int main()
 {
-    system("cls");
     printf("Welcome to Simple Maps\n");
     FILE *fptr = fopen("img\\WorldMap.txt", "r");
     if (fptr == NULL)
@@ -174,6 +177,7 @@ int main()
     if (type == 1)
     {
         printf("Please enter your map in an adjacency matrix.\n");
+        int gSize;
         printf("Enter graph size: ");
         scanf("%d", &V);
         int newGraph[V][V];
@@ -212,7 +216,8 @@ int main()
                 }
             }
             printf("______________________________________\n");
-            int src = -1;
+
+        int src = -1;
             while (src < 0 || src >= V)
             {
                 printf("Choose a starting point: ");
@@ -230,7 +235,6 @@ int main()
             scanf("%d", &speed);
 
             dijkstra(newGraph, src, tgt, speed);
-
     }
     else if (type == 2)
     {
@@ -330,8 +334,8 @@ int main()
         graph1[4][0] = 12;
         graph1[4][1] = 0;
         graph1[4][2] = 0;
-        graph1[4][3] = 0;
-        graph1[4][4] = 3;
+        graph1[4][3] = 3;
+        graph1[4][4] = 0;
         graph1[4][5] = 8;
         graph1[4][6] = 0;
         graph1[4][7] = 0;
@@ -365,12 +369,12 @@ int main()
         graph1[6][1] = 0;
         graph1[6][2] = 0;
         graph1[6][3] = 3;
-        graph1[6][4] = 8;
+        graph1[6][4] = 0;
         graph1[6][5] = 5;
         graph1[6][6] = 0;
         graph1[6][7] = 1;
         graph1[6][8] = 3;
-        graph1[6][9] = 0;
+        graph1[6][9] = 1;
         graph1[6][10] = 0;
         graph1[6][11] = 0;
         graph1[6][12] = 0;
@@ -458,7 +462,7 @@ int main()
         graph1[11][9] = 10;
         graph1[11][10] = 13;
         graph1[11][11] = 0;
-        graph1[11][12] = 0;
+        graph1[11][12] = 9;
         graph1[11][13] = 0;
         graph1[11][14] = 0;
         graph1[11][15] = 17;
@@ -532,10 +536,10 @@ int main()
         graph1[15][15] = 0;
 
         graph2[0][0] = 0;
-        graph2[0][1] = 3;
+        graph2[0][1] = 4;
         graph2[0][2] = 0;
-        graph2[0][3] = 7;
-        graph2[0][4] = 12;
+        graph2[0][3] = 0;
+        graph2[0][4] = 2;
         graph2[0][5] = 0;
         graph2[0][6] = 0;
         graph2[0][7] = 0;
@@ -548,11 +552,11 @@ int main()
         graph2[0][14] = 0;
         graph2[0][15] = 0;
 
-        graph2[1][0] = 3;
+        graph2[1][0] = 4;
         graph2[1][1] = 0;
-        graph2[1][2] = 1;
-        graph2[1][3] = 4;
-        graph2[1][4] = 0;
+        graph2[1][2] = 3;
+        graph2[1][3] = 0;
+        graph2[1][4] = 5;
         graph2[1][5] = 0;
         graph2[1][6] = 0;
         graph2[1][7] = 0;
@@ -566,13 +570,13 @@ int main()
         graph2[1][15] = 0;
 
         graph2[2][0] = 0;
-        graph2[2][1] = 1;
+        graph2[2][1] = 3;
         graph2[2][2] = 0;
-        graph2[2][3] = 2;
+        graph2[2][3] = 3;
         graph2[2][4] = 0;
-        graph2[2][5] = 0;
-        graph2[2][6] = 0;
-        graph2[2][7] = 4;
+        graph2[2][5] = 6;
+        graph2[2][6] = 5;
+        graph2[2][7] = 0;
         graph2[2][8] = 0;
         graph2[2][9] = 0;
         graph2[2][10] = 0;
@@ -582,14 +586,14 @@ int main()
         graph2[2][14] = 0;
         graph2[2][15] = 0;
 
-        graph2[3][0] = 7;
-        graph2[3][1] = 4;
-        graph2[3][2] = 2;
+        graph2[3][0] = 0;
+        graph2[3][1] = 0;
+        graph2[3][2] = 3;
         graph2[3][3] = 0;
         graph2[3][4] = 3;
-        graph2[3][5] = 7;
-        graph2[3][6] = 3;
-        graph2[3][7] = 4;
+        graph2[3][5] = 0;
+        graph2[3][6] = 0;
+        graph2[3][7] = 0;
         graph2[3][8] = 0;
         graph2[3][9] = 0;
         graph2[3][10] = 0;
@@ -599,12 +603,12 @@ int main()
         graph2[3][14] = 0;
         graph2[3][15] = 0;
 
-        graph2[4][0] = 12;
-        graph2[4][1] = 0;
+        graph2[4][0] = 2;
+        graph2[4][1] = 5;
         graph2[4][2] = 0;
         graph2[4][3] = 3;
         graph2[4][4] = 0;
-        graph2[4][5] = 8;
+        graph2[4][5] = 0;
         graph2[4][6] = 0;
         graph2[4][7] = 0;
         graph2[4][8] = 0;
@@ -643,7 +647,7 @@ int main()
         graph2[6][7] = 6;
         graph2[6][8] = 0;
         graph2[6][9] = 0;
-        graph2[6][10] = 0;
+        graph2[6][10] = 3;
         graph2[6][11] = 0;
         graph2[6][12] = 0;
         graph2[6][13] = 0;
@@ -690,13 +694,13 @@ int main()
         graph2[9][3] = 0;
         graph2[9][4] = 0;
         graph2[9][5] = 0;
-        graph2[9][6] = 1;
-        graph2[9][7] = 2;
+        graph2[9][6] = 0;
+        graph2[9][7] = 0;
         graph2[9][8] = 8;
         graph2[9][9] = 0;
         graph2[9][10] = 7;
         graph2[9][11] = 10;
-        graph2[9][12] = 0;
+        graph2[9][12] = 3;
         graph2[9][13] = 0;
         graph2[9][14] = 0;
         graph2[9][15] = 0;
@@ -744,7 +748,7 @@ int main()
         graph2[12][6] = 0;
         graph2[12][7] = 0;
         graph2[12][8] = 0;
-        graph2[12][9] = 0;
+        graph2[12][9] = 3;
         graph2[12][10] = 0;
         graph2[12][11] = 0;
         graph2[12][12] = 0;
@@ -767,7 +771,7 @@ int main()
         graph2[13][12] = 3;
         graph2[13][13] = 0;
         graph2[13][14] = 6;
-        graph2[13][15] = 0;
+        graph2[13][15] = 8;
 
         graph2[14][0] = 0;
         graph2[14][1] = 0;
